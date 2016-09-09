@@ -8,6 +8,7 @@
 
 import Foundation
 import Alamofire
+import AlamofireObjectMapper
 
 enum GrantType: String {
     case password = "password"
@@ -15,7 +16,13 @@ enum GrantType: String {
     case refreshToken = "refresh_token"
 }
 
+enum AuthErrorType: ErrorType {
+    case UnAuthorized(message: String)
+}
+
 final class AuthorizationService {
+    
+    var delegate: AuthViewControllerDelegate?
     
     static let sharedInstance = AuthorizationService()
     
@@ -45,5 +52,14 @@ final class AuthorizationService {
         parameters += ["username": username, "password": password]
         
         Alamofire.request(.POST, CONSTANTS.AuthURLS.loginPath, parameters: parameters, encoding: .URL, headers: nil)
+        .validate()
+        .responseObject { [unowned self](response: Response<OAuthResponse, NSError>) in
+            guard let _ = response.result.value where response.result.error == nil else {
+                self.delegate?.loginDidFail(withError: AuthErrorType.UnAuthorized(message: "Couldn't Login"))
+                return
+            }
+            
+            self.delegate?.loginDidSucceed()
+        }
     }
 }

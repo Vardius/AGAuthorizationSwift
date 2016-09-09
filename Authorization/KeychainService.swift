@@ -43,4 +43,8 @@ extension Keychain {
             return expDate.earlierDate(NSDate()).isEqualToDate(expDate)
         }
     }
+    
+    func setValue(value value: String, forKey key: String) {
+        self[key] = value
+    }
 }

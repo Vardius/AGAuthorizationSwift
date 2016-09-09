@@ -15,6 +15,8 @@
 		86FC3B291D818E3700CDBF9D /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86FC3B281D818E3700CDBF9D /* KeychainService.swift */; };
 		86FC3B2B1D81A12800CDBF9D /* AuthViewControllerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86FC3B2A1D81A12800CDBF9D /* AuthViewControllerType.swift */; };
 		86FC3B2D1D81A71700CDBF9D /* Dictionary+SumOperator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86FC3B2C1D81A71700CDBF9D /* Dictionary+SumOperator.swift */; };
+		86FC3B351D82DED700CDBF9D /* OAuthResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86FC3B341D82DED700CDBF9D /* OAuthResponse.swift */; };
+		86FC3B381D82E3C700CDBF9D /* AuthViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86FC3B371D82E3C700CDBF9D /* AuthViewControllerDelegate.swift */; };
 		D7752AFEF22A097526357050 /* Pods_Authorization.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1F8DE27F4CB0A35E0B94CAA /* Pods_Authorization.framework */; };
 		E30631E9F95EB5EA00462192 /* Pods_AuthorizationTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C48F6006D52FBA1B996E047D /* Pods_AuthorizationTests.framework */; };
 /* End PBXBuildFile section */
@@ -44,6 +46,8 @@
 		86FC3B281D818E3700CDBF9D /* KeychainService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
 		86FC3B2A1D81A12800CDBF9D /* AuthViewControllerType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthViewControllerType.swift; sourceTree = "<group>"; };
 		86FC3B2C1D81A71700CDBF9D /* Dictionary+SumOperator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Dictionary+SumOperator.swift"; sourceTree = "<group>"; };
+		86FC3B341D82DED700CDBF9D /* OAuthResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OAuthResponse.swift; sourceTree = "<group>"; };
+		86FC3B371D82E3C700CDBF9D /* AuthViewControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthViewControllerDelegate.swift; sourceTree = "<group>"; };
 		C48F6006D52FBA1B996E047D /* Pods_AuthorizationTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AuthorizationTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D4B2EFD54DD0FAFE8C7D5B58 /* Pods-Authorization.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Authorization.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Authorization/Pods-Authorization.debug.xcconfig"; sourceTree = "<group>"; };
 		F1F8DE27F4CB0A35E0B94CAA /* Pods_Authorization.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Authorization.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -105,8 +109,10 @@
 			isa = PBXGroup;
 			children = (
 				86B311381D8188C6005BFFAF /* Constants */,
+				86FC3B361D82DEDC00CDBF9D /* Models */,
 				86B3113B1D818AB4005BFFAF /* Services */,
 				86FC3B2A1D81A12800CDBF9D /* AuthViewControllerType.swift */,
+				86FC3B371D82E3C700CDBF9D /* AuthViewControllerDelegate.swift */,
 				86FC3B2C1D81A71700CDBF9D /* Dictionary+SumOperator.swift */,
 				86B3111F1D818879005BFFAF /* Authorization.h */,
 				86B311211D818879005BFFAF /* Info.plist */,
@@ -138,6 +144,14 @@
 				86FC3B281D818E3700CDBF9D /* KeychainService.swift */,
 			);
 			name = Services;
+			sourceTree = "<group>";
+		};
+		86FC3B361D82DEDC00CDBF9D /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				86FC3B341D82DED700CDBF9D /* OAuthResponse.swift */,
+			);
+			name = Models;
 			sourceTree = "<group>";
 		};
 		9D51ED15CB48BFD9AEBC65B3 /* Frameworks */ = {
@@ -342,8 +356,10 @@
 			files = (
 				86B311371D8188C1005BFFAF /* Constants.swift in Sources */,
 				86B3113A1D818AAD005BFFAF /* AuthorizationService.swift in Sources */,
+				86FC3B351D82DED700CDBF9D /* OAuthResponse.swift in Sources */,
 				86FC3B2B1D81A12800CDBF9D /* AuthViewControllerType.swift in Sources */,
 				86FC3B2D1D81A71700CDBF9D /* Dictionary+SumOperator.swift in Sources */,
+				86FC3B381D82E3C700CDBF9D /* AuthViewControllerDelegate.swift in Sources */,
 				86FC3B291D818E3700CDBF9D /* KeychainService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

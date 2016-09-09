@@ -12,3 +12,9 @@ import Foundation
 protocol AuthViewControllerType: class {
     func login(withUsername username: String, andPassword password: String)
 }
+
+extension AuthViewControllerType {
+    func login(withUsername username: String, andPassword password: String) {
+        AuthorizationService.sharedInstance.login(withUsername: username, andPassword: password)
+    }
+}
