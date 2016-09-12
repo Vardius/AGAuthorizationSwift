@@ -9,6 +9,7 @@
 import Foundation
 import Alamofire
 import AlamofireObjectMapper
+import KeychainAccess
 
 enum GrantType: String {
     case password = "password"
@@ -17,7 +18,20 @@ enum GrantType: String {
 }
 
 enum AuthErrorType: ErrorType {
-    case UnAuthorized(message: String)
+    case WrongPassword(message: String, code: Int?)
+    case UnAuthorized(message: String, code: Int?)
+    case GenericError(message: String)
+    
+    init(statusCode: Int?) {
+        switch statusCode {
+        case 400?:
+            self = AuthErrorType.WrongPassword(message: "Wrong combination", code: statusCode)
+        case 401?:
+            self = AuthErrorType.UnAuthorized(message: "Invalid access token", code: statusCode)
+        default:
+            self = AuthErrorType.GenericError(message: "An error has occured")
+        }
+    }
 }
 
 final class AuthorizationService {
@@ -34,7 +48,8 @@ final class AuthorizationService {
     
     var token_header: [String: String]? {
         get {
-            return ["Authorization": "Bearer"]
+            guard let token = Keychain.sharedInstance.accessToken else { return nil }
+            return ["Authorization": "Bearer \(token)"]
         }
     }
     
@@ -46,19 +61,46 @@ final class AuthorizationService {
         }
     }
     
+    var refreshTokenParameters: [String: String]? {
+        get {
+            guard let refreshToken = Keychain.sharedInstance.refreshToken else { return nil }
+            let parameters: [String: String] = [CONSTANTS.AuthKeys.CLIENT_ID: CONSTANTS.client_id, CONSTANTS.AuthKeys.CLIENT_SECRET: CONSTANTS.client_secret, CONSTANTS.AuthKeys.GRANT_TYPE: GrantType.refreshToken.rawValue, CONSTANTS.AuthKeys.refreshTokenKey: refreshToken]
+            return parameters
+        }
+    }
+    
+    private var triedRefresh = false
+    
+    func retryAfterRefresh(fn: () -> Void) {
+        guard let parameters = refreshTokenParameters else { return }
+        triedRefresh = true
+        Alamofire.request(.POST, CONSTANTS.AuthURLS.refreshTokenPath, parameters: parameters, encoding: .URL, headers: nil)
+        .validate()
+        .responseObject { (response: Response<OAuthResponse, NSError>) in
+            if response.response?.statusCode == 200 {
+                fn()
+            } else {
+                self.delegate?.loginDidFail(withError: AuthErrorType.init(statusCode: response.response?.statusCode))
+            }
+            return
+        }
+    }
+    
     func login(withUsername username: String, andPassword password: String) {
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         var parameters = loginParameters
         parameters += ["username": username, "password": password]
         
         Alamofire.request(.POST, CONSTANTS.AuthURLS.loginPath, parameters: parameters, encoding: .URL, headers: nil)
-        .validate()
         .responseObject { [unowned self](response: Response<OAuthResponse, NSError>) in
             guard let _ = response.result.value where response.result.error == nil else {
-                self.delegate?.loginDidFail(withError: AuthErrorType.UnAuthorized(message: "Couldn't Login"))
+                if !self.triedRefresh && response.response?.statusCode == 401 {
+                    self.retryAfterRefresh({self.login(withUsername: username, andPassword: password)})
+                    return
+                }
+                self.delegate?.loginDidFail(withError: AuthErrorType.init(statusCode: response.response?.statusCode))
                 return
             }
-            
             self.delegate?.loginDidSucceed()
         }
     }

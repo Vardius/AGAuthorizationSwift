@@ -26,6 +26,14 @@ class AuthorizationTests: XCTestCase {
         // Use XCTAssert and related functions to verify your tests produce the correct results.
     }
     
+    func testLogin() {
+        expectationWithDescription("Login should succeed")
+        AuthorizationService.sharedInstance.login(withUsername: "patient@patient.com", andPassword: "Test123!")
+        waitForExpectationsWithTimeout(10) { (error) in
+            print(error)
+        }
+    }
+    
     func testPerformanceExample() {
         // This is an example of a performance test case.
         self.measureBlock {

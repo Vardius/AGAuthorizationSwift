@@ -12,14 +12,14 @@ import KeychainAccess
 extension Keychain {
     static let sharedInstance = Keychain(service: CONSTANTS.KeychainConstants.service)
     
-    private var accessToken: String? {
+    var accessToken: String? {
         guard let token = self[CONSTANTS.KeychainConstants.accessTokenKey] else {
             return nil
         }
         return token
     }
     
-    private var refreshToken: String? {
+    var refreshToken: String? {
         guard let token = self[CONSTANTS.KeychainConstants.refreshTokenKey] else {
             return nil
         }
