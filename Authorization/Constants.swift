@@ -9,10 +9,10 @@
 import Foundation
 
 struct CONSTANTS {
-    static let basePath = "http://api-hb.ops-dev.pl/"
+    static let basePath = ""
     
-    static let client_id = "1_3h9h5utfplc0cckowwk0880o0o844so4wcw8kg0cggcw8w04so"
-    static let client_secret = "4e2qvb529qqsc0sswk8wo0cs4ok4cgcc4c8wsk4osgss8ww0s"
+    static let client_id = ""
+    static let client_secret = ""
     
     struct AuthURLS {
         static let loginPath = basePath + "oauth/v2/token"
