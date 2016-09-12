@@ -15,16 +15,16 @@ struct CONSTANTS {
     static let client_secret = ""
     
     struct AuthURLS {
-        static let loginPath = basePath + ""
+        static let loginPath = basePath + "oauth/v2/token"
         static let registerPath = basePath + ""
-        static let refreshTokenPath = basePath + ""
+        static let refreshTokenPath = basePath + "oauth/v2/token"
         static let forgotPasswordPath = basePath + ""
     }
     
     struct AuthKeys {
         static let CLIENT_ID = "client_id"
         static let CLIENT_SECRET = "client_secret"
-        static let GRANT_TYPE = "gran_type"
+        static let GRANT_TYPE = "grant_type"
         static let accessTokenKey = "access_token"
         static let refreshTokenKey = "refresh_token"
         static let expDateKey = "expires_in"

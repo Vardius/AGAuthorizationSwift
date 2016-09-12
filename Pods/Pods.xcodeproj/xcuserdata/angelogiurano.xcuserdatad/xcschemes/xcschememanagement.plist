@@ -19,11 +19,6 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>OMGHTTPURLRQ.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>ObjectMapper.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -39,11 +34,6 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>PromiseKit.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>SVProgressHUD.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -52,7 +42,12 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>190ACD3A51BC90B85EADB13E9CDD207B</key>
+		<key>4428B83A76C43551AC9A94E49A382CB9</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>7422E54C5EA0E7C205F4DBEB128DBDEF</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -67,27 +62,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>9972FB1419946C3E64505229835FB016</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>BAB836DC30C8FA88F9FBF8E4C6443F1F</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>C5CBCAA97E951CC882334464FBDF983D</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>CF6D5AAD0415CC0CA5638574C2E1125D</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>D680B07730E9AF92D3165031EEB74ADB</key>
+		<key>E3D8138643FB91F51205623DC2FBA8FD</key>
 		<dict>
 			<key>primary</key>
 			<true/>
