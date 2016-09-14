@@ -11,6 +11,7 @@
 		864613201D86E56600B48084 /* Alamofire.framework in Resources */ = {isa = PBXBuildFile; fileRef = 8646131E1D86E55E00B48084 /* Alamofire.framework */; };
 		864613211D86E61400B48084 /* Alamofire.framework in Resources */ = {isa = PBXBuildFile; fileRef = 8646131E1D86E55E00B48084 /* Alamofire.framework */; };
 		864613231D86EA4A00B48084 /* Alamofire.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8646131E1D86E55E00B48084 /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		8646138E1D894EE500B48084 /* TestAuthorizationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8646138D1D894EE500B48084 /* TestAuthorizationViewController.swift */; };
 		86B311201D818879005BFFAF /* Authorization.h in Headers */ = {isa = PBXBuildFile; fileRef = 86B3111F1D818879005BFFAF /* Authorization.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		86B311271D81887A005BFFAF /* Authorization.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 86B3111C1D818879005BFFAF /* Authorization.framework */; };
 		86B3112C1D81887A005BFFAF /* AuthorizationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B3112B1D81887A005BFFAF /* AuthorizationTests.swift */; };
@@ -53,6 +54,7 @@
 		6C3308E42E0390586603E3A8 /* Pods-Authorization.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Authorization.release.xcconfig"; path = "Pods/Target Support Files/Pods-Authorization/Pods-Authorization.release.xcconfig"; sourceTree = "<group>"; };
 		751AB3564A6EC784B59522C5 /* Pods-AuthorizationTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AuthorizationTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AuthorizationTests/Pods-AuthorizationTests.debug.xcconfig"; sourceTree = "<group>"; };
 		8646131E1D86E55E00B48084 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = "../../Library/Developer/Xcode/DerivedData/Authorization-eqvevcpdtivelmdltlgeotzpdakn/Build/Products/Debug-iphonesimulator/Alamofire/Alamofire.framework"; sourceTree = "<group>"; };
+		8646138D1D894EE500B48084 /* TestAuthorizationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestAuthorizationViewController.swift; sourceTree = "<group>"; };
 		86B3111C1D818879005BFFAF /* Authorization.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Authorization.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		86B3111F1D818879005BFFAF /* Authorization.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Authorization.h; sourceTree = "<group>"; };
 		86B311211D818879005BFFAF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -143,6 +145,7 @@
 			isa = PBXGroup;
 			children = (
 				86B3112B1D81887A005BFFAF /* AuthorizationTests.swift */,
+				8646138D1D894EE500B48084 /* TestAuthorizationViewController.swift */,
 				86B3112D1D81887A005BFFAF /* Info.plist */,
 			);
 			path = AuthorizationTests;
@@ -399,6 +402,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8646138E1D894EE500B48084 /* TestAuthorizationViewController.swift in Sources */,
 				86B3112C1D81887A005BFFAF /* AuthorizationTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
