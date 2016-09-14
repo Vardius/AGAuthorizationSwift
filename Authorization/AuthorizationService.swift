@@ -94,10 +94,6 @@ final class AuthorizationService {
         Alamofire.request(.POST, CONSTANTS.AuthURLS.loginPath, parameters: parameters, encoding: .URL, headers: nil)
         .responseObject { [unowned self](response: Response<OAuthResponse, NSError>) in
             guard let _ = response.result.value where response.result.error == nil else {
-                if !self.triedRefresh && response.response?.statusCode == 401 {
-                    self.retryAfterRefresh({self.login(withUsername: username, andPassword: password)})
-                    return
-                }
                 self.delegate?.loginDidFail(withError: AuthErrorType.init(statusCode: response.response?.statusCode))
                 return
             }
