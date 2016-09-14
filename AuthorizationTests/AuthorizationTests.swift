@@ -28,6 +28,7 @@ class AuthorizationTests: XCTestCase {
     
     func testLoginShouldSucceed() {
         let authVC = TestAuthorizationViewController()
+
         AuthorizationService.sharedInstance.delegate = authVC
         
         let expectation = expectationWithDescription("Login succeeded")
