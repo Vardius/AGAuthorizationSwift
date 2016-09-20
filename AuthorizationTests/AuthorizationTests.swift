@@ -26,12 +26,31 @@ class AuthorizationTests: XCTestCase {
         // Use XCTAssert and related functions to verify your tests produce the correct results.
     }
     
-    func testLogin() {
-        expectationWithDescription("Login should succeed")
-        AuthorizationService.sharedInstance.login(withUsername: "patient@patient.com", andPassword: "Test123!")
-        waitForExpectationsWithTimeout(10) { (error) in
-            print(error)
+    func testLoginShouldSucceed() {
+        let authVC = TestAuthorizationViewController()
+
+        AuthorizationService.sharedInstance.delegate = authVC
+        
+        let expectation = expectationWithDescription("Login succeeded")
+        authVC.loginSucceded = {
+            expectation.fulfill()
         }
+
+        authVC.login(withUsername: "patient@patient.com", andPassword: "Test1234!")
+        waitForExpectationsWithTimeout(10, handler: nil)
+    }
+    
+    func testLoginShouldFail() {
+        let authVC = TestAuthorizationViewController()
+        AuthorizationService.sharedInstance.delegate = authVC
+        
+        let expectation = expectationWithDescription("Login failed")
+        authVC.loginFailed = {
+            expectation.fulfill()
+        }
+        
+        authVC.login(withUsername: "patient@patiet.com", andPassword: "Test1234!")
+        waitForExpectationsWithTimeout(10, handler: nil)
     }
     
     func testPerformanceExample() {

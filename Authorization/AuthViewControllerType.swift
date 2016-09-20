@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 protocol AuthViewControllerType: class {
     func login(withUsername username: String, andPassword password: String)
 }

@@ -10,7 +10,7 @@ import Foundation
 
 struct CONSTANTS {
     static let basePath = ""
-    
+
     static let client_id = ""
     static let client_secret = ""
     

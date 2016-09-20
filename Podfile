@@ -8,6 +8,7 @@ target ‘Authorization’ do
     pod 'AlamofireObjectMapper', '~> 3.0'
     pod 'SVProgressHUD'
     pod 'KeychainAccess'
+    pod 'PromiseKit', '~> 3.5.1'
     #pod 'DateTools'
     #pod 'OAuthSwift', '~> 0.5.0'
     #pod 'ReachabilitySwift', :git => 'https://github.com/ashleymills/Reachability.swift'

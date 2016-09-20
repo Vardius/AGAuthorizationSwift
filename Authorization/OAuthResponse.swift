@@ -14,20 +14,16 @@ final class OAuthResponse: Mappable {
     
     private var authToken: String?
     private var refreshToken: String?
-    private var expiresIn: String?
+    private var expiresIn: Int?
     
     required init?(_ map: Map) {
-        if let authToken = map.JSONDictionary[CONSTANTS.AuthKeys.accessTokenKey] as? String {
-            Keychain.sharedInstance.setValue(value: authToken, forKey: CONSTANTS.KeychainConstants.accessTokenKey)
+        guard let authToken = map.JSONDictionary[CONSTANTS.AuthKeys.accessTokenKey] as? String, refreshToken = map.JSONDictionary[CONSTANTS.AuthKeys.refreshTokenKey] as? String, expDate = map.JSONDictionary[CONSTANTS.AuthKeys.expDateKey] as? Int else {
+            return nil
         }
         
-        if let refreshToken = map.JSONDictionary[CONSTANTS.AuthKeys.refreshTokenKey] as? String {
-            Keychain.sharedInstance.setValue(value: refreshToken, forKey: CONSTANTS.KeychainConstants.refreshTokenKey)
-        }
-        
-        if let expDate = map.JSONDictionary[CONSTANTS.AuthKeys.expDateKey] as? String {
-            Keychain.sharedInstance.setValue(value: expDate, forKey: CONSTANTS.KeychainConstants.expDateKey)
-        }
+        Keychain.sharedInstance.setValue(value: authToken, forKey: CONSTANTS.KeychainConstants.accessTokenKey)
+        Keychain.sharedInstance.setValue(value: refreshToken, forKey: CONSTANTS.KeychainConstants.refreshTokenKey)
+        Keychain.sharedInstance.setValue(value: "\(expDate)", forKey: CONSTANTS.KeychainConstants.expDateKey)
     }
     
     func mapping(map: Map) {

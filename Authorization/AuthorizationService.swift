@@ -1,15 +1,8 @@
-//
-//  AuthorizationService.swift
-//  Authorization
-//
-//  Created by Angelo Giurano on 9/8/16.
-//  Copyright © 2016 OpsTalent. All rights reserved.
-//
-
 import Foundation
 import Alamofire
 import AlamofireObjectMapper
 import KeychainAccess
+import PromiseKit
 
 enum GrantType: String {
     case password = "password"
@@ -40,13 +33,9 @@ final class AuthorizationService {
     
     static let sharedInstance = AuthorizationService()
     
-    private init() {
-        precondition(CONSTANTS.client_id != "", "Set client_id in Constants/Constants.swift")
-        precondition(CONSTANTS.client_secret != "" , "Set client_id in Constants/Constants.swift")
-        precondition(CONSTANTS.basePath != "", "Set basePath in Constants/Constants.swift")
-    }
+    private init() {}
     
-    var token_header: [String: String]? {
+    static var token_header: [String: String]? {
         get {
             guard let token = Keychain.sharedInstance.accessToken else { return nil }
             return ["Authorization": "Bearer \(token)"]
@@ -54,14 +43,14 @@ final class AuthorizationService {
     }
     
     
-    var loginParameters: [String: String] {
+    static var loginParameters: [String: String] {
         get {
             let parameters: [String: String] = [CONSTANTS.AuthKeys.CLIENT_ID: CONSTANTS.client_id, CONSTANTS.AuthKeys.CLIENT_SECRET: CONSTANTS.client_secret, CONSTANTS.AuthKeys.GRANT_TYPE: GrantType.password.rawValue]
             return parameters
         }
     }
     
-    var refreshTokenParameters: [String: String]? {
+    static var refreshTokenParameters: [String: String]? {
         get {
             guard let refreshToken = Keychain.sharedInstance.refreshToken else { return nil }
             let parameters: [String: String] = [CONSTANTS.AuthKeys.CLIENT_ID: CONSTANTS.client_id, CONSTANTS.AuthKeys.CLIENT_SECRET: CONSTANTS.client_secret, CONSTANTS.AuthKeys.GRANT_TYPE: GrantType.refreshToken.rawValue, CONSTANTS.AuthKeys.refreshTokenKey: refreshToken]
@@ -69,39 +58,15 @@ final class AuthorizationService {
         }
     }
     
-    private var triedRefresh = false
     
-    func retryAfterRefresh(fn: () -> Void) {
-        guard let parameters = refreshTokenParameters else { return }
-        triedRefresh = true
-        Alamofire.request(.POST, CONSTANTS.AuthURLS.refreshTokenPath, parameters: parameters, encoding: .URL, headers: nil)
-        .validate()
-        .responseObject { (response: Response<OAuthResponse, NSError>) in
-            if response.response?.statusCode == 200 {
-                fn()
-            } else {
-                self.delegate?.loginDidFail(withError: AuthErrorType.init(statusCode: response.response?.statusCode))
-            }
-            return
-        }
+    func login(withUsername username: String, andPassword password: String) -> Promise<OAuthResponse?> {
+        var parameters = AuthorizationService.loginParameters
+        parameters += ["username": username, "password": password]
+        return HTTPClient.sharedInstance.post(AuthRouter.login, parameters: parameters)
     }
     
-    func login(withUsername username: String, andPassword password: String) {
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
-        var parameters = loginParameters
-        parameters += ["username": username, "password": password]
-        
-        Alamofire.request(.POST, CONSTANTS.AuthURLS.loginPath, parameters: parameters, encoding: .URL, headers: nil)
-        .responseObject { [unowned self](response: Response<OAuthResponse, NSError>) in
-            guard let _ = response.result.value where response.result.error == nil else {
-                if !self.triedRefresh && response.response?.statusCode == 401 {
-                    self.retryAfterRefresh({self.login(withUsername: username, andPassword: password)})
-                    return
-                }
-                self.delegate?.loginDidFail(withError: AuthErrorType.init(statusCode: response.response?.statusCode))
-                return
-            }
-            self.delegate?.loginDidSucceed()
-        }
+    func getValidToken() -> Promise<OAuthResponse?> {
+        let parameters = AuthorizationService.refreshTokenParameters
+        return HTTPClient.sharedInstance.post(AuthRouter.refreshToken, parameters: parameters)
     }
 }
