@@ -80,7 +80,7 @@ class HTTPClient : NSObject {
                     }
                     
                     func parsingError(erroString : String) -> NSError {
-                        return NSError(domain: "com.paychores.error", code: -100, userInfo: nil)
+                        return NSError(domain: "com.authorization.error", code: -100, userInfo: nil)
                     }
                     
                     var encoding: ParameterEncoding = .URLEncodedInURL
@@ -112,7 +112,7 @@ class HTTPClient : NSObject {
                                             reject(APIError.unAuthorizedError("UNauthorized"))
                                         }                            }
                                 }else{
-                                    let err = NSError(domain: "com.paychores.error", code: -101, userInfo: nil)
+                                    let err = NSError(domain: "com.authorization.error", code: -101, userInfo: nil)
                                     reject(err)
                                 }
                             }
@@ -136,7 +136,7 @@ class HTTPClient : NSObject {
                     }
                     
                     func parsingError(erroString : String) -> NSError {
-                        return NSError(domain: "com.paychores.error", code: -100, userInfo: nil)
+                        return NSError(domain: "com.authorization.error", code: -100, userInfo: nil)
                     }
                     
                     var encoding: ParameterEncoding = .URLEncodedInURL
@@ -167,7 +167,7 @@ class HTTPClient : NSObject {
                                         }
                                     }
                                 }else{
-                                    let err = NSError(domain: "com.paychores.error", code: -101, userInfo: nil)
+                                    let err = NSError(domain: "com.authorization.error", code: -101, userInfo: nil)
                                     reject(err)
                                 }
                             }
@@ -192,7 +192,7 @@ class HTTPClient : NSObject {
                     }
                     
                     func parsingError(erroString : String) -> NSError {
-                        return NSError(domain: "com.wallbrand.error", code: -100, userInfo: nil)
+                        return NSError(domain: "com.authorization.error", code: -100, userInfo: nil)
                     }
                     
                     var encoding: ParameterEncoding = .URLEncodedInURL

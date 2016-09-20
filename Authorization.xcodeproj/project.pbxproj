@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		8646131F1D86E55E00B48084 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8646131E1D86E55E00B48084 /* Alamofire.framework */; };
 		864613201D86E56600B48084 /* Alamofire.framework in Resources */ = {isa = PBXBuildFile; fileRef = 8646131E1D86E55E00B48084 /* Alamofire.framework */; };
 		864613211D86E61400B48084 /* Alamofire.framework in Resources */ = {isa = PBXBuildFile; fileRef = 8646131E1D86E55E00B48084 /* Alamofire.framework */; };
 		864613231D86EA4A00B48084 /* Alamofire.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8646131E1D86E55E00B48084 /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -86,7 +85,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8646131F1D86E55E00B48084 /* Alamofire.framework in Frameworks */,
 				D7752AFEF22A097526357050 /* Pods_Authorization.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
