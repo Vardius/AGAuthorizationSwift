@@ -20,4 +20,5 @@ target ‘AuthorizationTests’ do
     pod 'AlamofireObjectMapper', '~> 3.0'
     pod 'SVProgressHUD'
     pod 'KeychainAccess'
+    pod 'PromiseKit', '~> 3.5.1'
 end
