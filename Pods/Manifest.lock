@@ -5,12 +5,32 @@ PODS:
     - ObjectMapper (~> 1.0)
   - KeychainAccess (2.3.6)
   - ObjectMapper (1.4.0)
+  - OMGHTTPURLRQ (3.2.0):
+    - OMGHTTPURLRQ/RQ (= 3.2.0)
+  - OMGHTTPURLRQ/FormURLEncode (3.2.0)
+  - OMGHTTPURLRQ/RQ (3.2.0):
+    - OMGHTTPURLRQ/FormURLEncode
+    - OMGHTTPURLRQ/UserAgent
+  - OMGHTTPURLRQ/UserAgent (3.2.0)
+  - PromiseKit (3.5.1):
+    - PromiseKit/Foundation (= 3.5.1)
+    - PromiseKit/QuartzCore (= 3.5.1)
+    - PromiseKit/UIKit (= 3.5.1)
+  - PromiseKit/CorePromise (3.5.1)
+  - PromiseKit/Foundation (3.5.1):
+    - OMGHTTPURLRQ (~> 3.2.0)
+    - PromiseKit/CorePromise
+  - PromiseKit/QuartzCore (3.5.1):
+    - PromiseKit/CorePromise
+  - PromiseKit/UIKit (3.5.1):
+    - PromiseKit/CorePromise
   - SVProgressHUD (2.0.3)
 
 DEPENDENCIES:
   - Alamofire (~> 3.3)
   - AlamofireObjectMapper (~> 3.0)
   - KeychainAccess
+  - PromiseKit (~> 3.5.1)
   - SVProgressHUD
 
 SPEC CHECKSUMS:
@@ -18,8 +38,10 @@ SPEC CHECKSUMS:
   AlamofireObjectMapper: 70f97cbf45c01c48d26aa07a1a7059a60ed7411d
   KeychainAccess: 7f10e2ef998ddf954a64d5d608be08677774684d
   ObjectMapper: a07ad0462c5adf014adc0f89ef04c29b626e855e
+  OMGHTTPURLRQ: 1e54807cb7d5dbb506926e53498e1e9ac5720c79
+  PromiseKit: 99ea973444a4bff6c38ffb97fa1bb175e619bcf0
   SVProgressHUD: b0830714205bea1317ea1a2ebc71e5633af334d4
 
-PODFILE CHECKSUM: 974acecccb21888b82918b435434c3b0f4a0979f
+PODFILE CHECKSUM: d9da719bc2c2e0acade407f8a1477802410be173
 
 COCOAPODS: 1.0.1
