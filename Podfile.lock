@@ -3,6 +3,7 @@ PODS:
   - AlamofireObjectMapper (3.0.2):
     - Alamofire (~> 3.2)
     - ObjectMapper (~> 1.0)
+  - DateTools (1.7.0)
   - KeychainAccess (2.3.6)
   - ObjectMapper (1.4.0)
   - OMGHTTPURLRQ (3.2.0):
@@ -29,6 +30,7 @@ PODS:
 DEPENDENCIES:
   - Alamofire (~> 3.3)
   - AlamofireObjectMapper (~> 3.0)
+  - DateTools
   - KeychainAccess
   - PromiseKit (~> 3.5.1)
   - SVProgressHUD
@@ -36,12 +38,13 @@ DEPENDENCIES:
 SPEC CHECKSUMS:
   Alamofire: b70a7352335f8ea5babd0a923eb7e8eacc67b877
   AlamofireObjectMapper: 70f97cbf45c01c48d26aa07a1a7059a60ed7411d
+  DateTools: 53288ee8b905fdc75897a1e6b5cc0144b14cba60
   KeychainAccess: 7f10e2ef998ddf954a64d5d608be08677774684d
   ObjectMapper: a07ad0462c5adf014adc0f89ef04c29b626e855e
   OMGHTTPURLRQ: 1e54807cb7d5dbb506926e53498e1e9ac5720c79
   PromiseKit: 99ea973444a4bff6c38ffb97fa1bb175e619bcf0
   SVProgressHUD: b0830714205bea1317ea1a2ebc71e5633af334d4
 
-PODFILE CHECKSUM: 4bcc6886557fe95f92ed61bbe95e6613145f04c8
+PODFILE CHECKSUM: 52466698df4b8c5a4aa0ee6e13438835e9b44a9a
 
 COCOAPODS: 1.0.1

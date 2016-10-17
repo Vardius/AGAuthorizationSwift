@@ -9,6 +9,7 @@
 import Foundation
 import ObjectMapper
 import KeychainAccess
+import DateTools
 
 final class OAuthResponse: Mappable {
     
@@ -23,7 +24,14 @@ final class OAuthResponse: Mappable {
         
         Keychain.sharedInstance.setValue(value: authToken, forKey: CONSTANTS.KeychainConstants.accessTokenKey)
         Keychain.sharedInstance.setValue(value: refreshToken, forKey: CONSTANTS.KeychainConstants.refreshTokenKey)
-        Keychain.sharedInstance.setValue(value: "\(expDate)", forKey: CONSTANTS.KeychainConstants.expDateKey)
+        let date = NSDate().dateByAddingSeconds(expDate).timeIntervalSince1970
+        Keychain.sharedInstance.setValue(value: "\(date)", forKey: CONSTANTS.KeychainConstants.expDateKey)
+    }
+    
+    init() {
+        self.authToken = Keychain.sharedInstance.accessToken
+        self.refreshToken = Keychain.sharedInstance.refreshToken
+        self.expiresIn = 3600
     }
     
     func mapping(map: Map) {

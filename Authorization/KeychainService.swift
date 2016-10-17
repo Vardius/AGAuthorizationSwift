@@ -28,8 +28,9 @@ extension Keychain {
     
     private var tokenExpDate: NSDate? {
         get {
-            guard let expDate = self[CONSTANTS.KeychainConstants.expDateKey], timeInterval = NSTimeInterval.init(expDate) else { return nil }
-            return NSDate.init(timeIntervalSince1970: NSTimeInterval.init(timeInterval))
+            guard let expDate = self[CONSTANTS.KeychainConstants.expDateKey] else { return nil }
+            let timeInterval = NSTimeInterval.init(expDate)
+            return NSDate.init(timeIntervalSince1970: timeInterval!)
         }
     }
     
@@ -46,5 +47,11 @@ extension Keychain {
     
     func setValue(value value: String, forKey key: String) {
         self[key] = value
+    }
+    
+    func logOut() {
+        self[CONSTANTS.KeychainConstants.accessTokenKey] = nil
+        self[CONSTANTS.KeychainConstants.refreshTokenKey] = nil
+        self[CONSTANTS.KeychainConstants.expDateKey] = nil
     }
 }

@@ -13,14 +13,17 @@ public enum AuthRouter: RouterType {
     
     case login
     case refreshToken
+    case register(String)
     
     public var URLString : String {
         let path : String = {
             switch self {
             case .login:
                 return CONSTANTS.AuthURLS.loginPath
-            default:
-                return ""
+            case .refreshToken:
+                return CONSTANTS.AuthURLS.refreshTokenPath
+            case .register(let token):
+                return CONSTANTS.AuthURLS.registerPath + "?access_token=\(token)"
             }
         }()
         return AuthRouter.baseURLString + path
