@@ -20,6 +20,7 @@
 		86B3112C1D81887A005BFFAF /* AuthorizationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B3112B1D81887A005BFFAF /* AuthorizationTests.swift */; };
 		86B311371D8188C1005BFFAF /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B311361D8188C1005BFFAF /* Constants.swift */; };
 		86B3113A1D818AAD005BFFAF /* AuthorizationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B311391D818AAD005BFFAF /* AuthorizationService.swift */; };
+		86BFF9841DB4B7D5000661B6 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BFF9831DB4B7D5000661B6 /* File.swift */; };
 		86FC3B291D818E3700CDBF9D /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86FC3B281D818E3700CDBF9D /* KeychainService.swift */; };
 		86FC3B2B1D81A12800CDBF9D /* AuthViewControllerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86FC3B2A1D81A12800CDBF9D /* AuthViewControllerType.swift */; };
 		86FC3B2D1D81A71700CDBF9D /* Dictionary+SumOperator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86FC3B2C1D81A71700CDBF9D /* Dictionary+SumOperator.swift */; };
@@ -70,6 +71,7 @@
 		86B3112D1D81887A005BFFAF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		86B311361D8188C1005BFFAF /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		86B311391D818AAD005BFFAF /* AuthorizationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizationService.swift; sourceTree = "<group>"; };
+		86BFF9831DB4B7D5000661B6 /* File.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		86FC3B281D818E3700CDBF9D /* KeychainService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
 		86FC3B2A1D81A12800CDBF9D /* AuthViewControllerType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthViewControllerType.swift; sourceTree = "<group>"; };
 		86FC3B2C1D81A71700CDBF9D /* Dictionary+SumOperator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Dictionary+SumOperator.swift"; sourceTree = "<group>"; };
@@ -180,6 +182,7 @@
 		86FC3B361D82DEDC00CDBF9D /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				86BFF9831DB4B7D5000661B6 /* File.swift */,
 				86999FA61D911C6E00A87C3E /* CountReply.swift */,
 				86FC3B341D82DED700CDBF9D /* OAuthResponse.swift */,
 			);
@@ -399,6 +402,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				86999FA31D911BE700A87C3E /* Router.swift in Sources */,
+				86BFF9841DB4B7D5000661B6 /* File.swift in Sources */,
 				86B311371D8188C1005BFFAF /* Constants.swift in Sources */,
 				86999FA71D911C6E00A87C3E /* CountReply.swift in Sources */,
 				86B3113A1D818AAD005BFFAF /* AuthorizationService.swift in Sources */,

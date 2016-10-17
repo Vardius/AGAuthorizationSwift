@@ -9,24 +9,24 @@
 import Foundation
 import ObjectMapper
 
-final class CountReply<T: Mappable>: Mappable {
+struct CountReply<T: Mappable>: Mappable {
     var success: Bool = false
     var data: [T]?
     var pagination: Pagination?
     var error: APIError?
     
-    required init?(_ map: Map) {}
+    init?(_ map: Map) {}
     
     init() {}
     
-    func mapping(map: Map) {
+    mutating func mapping(map: Map) {
         success <- map["success"]
         data <- map["data"]
         pagination <- map["pagination"]
     }
 }
 
-internal final class Pagination: Mappable {
+internal struct Pagination: Mappable {
     var pageCount: Int?
     var currentPage: Int?
     var hasNextPage: Bool?
@@ -34,9 +34,9 @@ internal final class Pagination: Mappable {
     var count: Int?
     var limit: Int?
     
-    required init?(_ map: Map) {}
+    init?(_ map: Map) {}
     
-    func mapping(map: Map) {
+    mutating func mapping(map: Map) {
         pageCount <- map["page_count"]
         currentPage <- map["current_page"]
         hasNextPage <- map["has_next_page"]

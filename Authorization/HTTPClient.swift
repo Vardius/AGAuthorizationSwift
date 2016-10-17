@@ -10,6 +10,7 @@ import Alamofire
 import AlamofireObjectMapper
 import ObjectMapper
 import PromiseKit
+import KeychainAccess
 
 private class APIResponse<T : Mappable>: Mappable {
     var success: Bool = false
@@ -40,6 +41,11 @@ class HTTPClient : NSObject {
         return self.httpOperation(.POST, route: route, parameters: parameters)
     }
     
+    func unauthorizedPost<T: Mappable>(route: RouterType, parameters : [String : AnyObject]? = nil) -> Promise<T?> {
+        return self.httpOperationUnauthorized(.POST, route: route, parameters: parameters)
+    }
+    
+    
     func post(route : RouterType, parameters : [String : AnyObject]? = nil) -> Promise<Void> {
         return self.httpOperationVoid(.POST, route: route, parameters: parameters)
     }
@@ -52,7 +58,7 @@ class HTTPClient : NSObject {
         return self.httpOperationVoid(.GET, route: route, parameters : parameters);
     }
     
-    func getList<T: Mappable>(route : RouterType, parameters : [String : AnyObject]? = nil) -> Promise<CountReply<T>> {
+    func getList<T: Mappable>(route : RouterType, parameters : [String : AnyObject]? = nil) -> Promise<[T]> {
         return self.httpOperationList(.GET, route: route, parameters: parameters)
     }
     
@@ -63,6 +69,10 @@ class HTTPClient : NSObject {
     
     func delete(route: Router, parameters: [String: AnyObject]? = nil) -> Promise<Void> {
         return self.httpOperationVoid(.DELETE, route: route, parameters: parameters)
+    }
+    
+    func put<T: Mappable>(route: RouterType, parameters: [String: AnyObject]? = nil) -> Promise<T?> {
+        return self.httpOperation(.PUT, route: route, parameters: parameters)
     }
     
     private func httpOperation<T : Mappable>(method : Alamofire.Method, route : RouterType, let parameters : [String : AnyObject]? = nil) -> Promise<T?> {
@@ -80,7 +90,7 @@ class HTTPClient : NSObject {
                     }
                     
                     func parsingError(erroString : String) -> NSError {
-                        return NSError(domain: "com.authorization.error", code: -100, userInfo: nil)
+                        return NSError(domain: "com.paychores.error", code: -100, userInfo: nil)
                     }
                     
                     var encoding: ParameterEncoding = .URLEncodedInURL
@@ -92,6 +102,8 @@ class HTTPClient : NSObject {
                         encoding = ParameterEncoding.URLEncodedInURL
                     case .DELETE:
                         encoding = ParameterEncoding.URL
+                    case .PUT:
+                        encoding = ParameterEncoding.JSON
                     default:
                         break
                     }
@@ -102,17 +114,10 @@ class HTTPClient : NSObject {
                             if let error = response.result.error {
                                 reject(error) //network error
                             }else {
-                                if let apiResponse = Mapper<APIResponse<T>>().map(response.result.value) {
-                                    if apiResponse.success {
-                                        fulfill(apiResponse.data)
-                                    }else{
-                                        if let _ = apiResponse.error {
-                                            reject(APIError.unAuthorizedError("UNauthorized"))
-                                        }else{
-                                            reject(APIError.unAuthorizedError("UNauthorized"))
-                                        }                            }
-                                }else{
-                                    let err = NSError(domain: "com.authorization.error", code: -101, userInfo: nil)
+                                if let apiResponse = Mapper<T>().map(response.result.value) {
+                                    fulfill(apiResponse)
+                                } else{
+                                    let err = NSError(domain: "com.paychores.error", code: -101, userInfo: nil)
                                     reject(err)
                                 }
                             }
@@ -122,9 +127,63 @@ class HTTPClient : NSObject {
         }
     }
     
-    private func httpOperationList<T : Mappable>(method : Alamofire.Method, route : RouterType, let parameters : [String : AnyObject]? = nil) -> Promise<CountReply<T>> {
+    //    private func httpOperationList<T : Mappable>(method : Alamofire.Method, route : RouterType, let parameters : [String : AnyObject]? = nil) -> Promise<CountReply<T>> {
+    //
+    //        return Promise<CountReply<T>> { (fulfill, reject) -> Void in
+    //
+    //            AuthorizationService.sharedInstance.getValidToken()
+    //            .then {
+    //                _ -> Void in
+    //
+    //                guard let tokenHeader = AuthorizationService.token_header else {
+    //                    reject(APIError.unAuthorizedError("Unauthorized"))
+    //                    return
+    //                }
+    //
+    //                func parsingError(erroString : String) -> NSError {
+    //                    return NSError(domain: "com.paychores.error", code: -100, userInfo: nil)
+    //                }
+    //
+    //                var encoding: ParameterEncoding = .URLEncodedInURL
+    //
+    //                switch method {
+    //                case .POST:
+    //                    encoding = ParameterEncoding.JSON
+    //                case .GET:
+    //                    encoding = ParameterEncoding.URLEncodedInURL
+    //                default:
+    //                    break
+    //                }
+    //
+    //                request(method, route.URLString, parameters: parameters, encoding: encoding, headers: tokenHeader)
+    //                .responseJSON { (response) -> Void in
+    //
+    //                    if let error = response.result.error {
+    //                        reject(error) //network error
+    //                    }else {
+    //                        if let apiResponse = Mapper<CountReply<T>>().map(response.result.value) {
+    //                            if apiResponse.success {
+    //                                fulfill(apiResponse)
+    //                            }else{
+    //                                if let _ = apiResponse.error {
+    //                                    reject(APIError.unAuthorizedError("UNauthorized"))
+    //                                }else{
+    //                                    reject(APIError.unAuthorizedError("UNauthorized"))
+    //                                }
+    //                            }
+    //                        }else{
+    //                            let err = NSError(domain: "com.paychores.error", code: -101, userInfo: nil)
+    //                            reject(err)
+    //                        }
+    //                    }
+    //                }
+    //            }
+    //        }
+    //    }
+    
+    private func httpOperationList<T : Mappable>(method : Alamofire.Method, route : RouterType, let parameters : [String : AnyObject]? = nil) -> Promise<[T]> {
         
-        return Promise<CountReply<T>> { (fulfill, reject) -> Void in
+        return Promise<[T]> { (fulfill, reject) -> Void in
             
             AuthorizationService.sharedInstance.getValidToken()
                 .then {
@@ -136,7 +195,7 @@ class HTTPClient : NSObject {
                     }
                     
                     func parsingError(erroString : String) -> NSError {
-                        return NSError(domain: "com.authorization.error", code: -100, userInfo: nil)
+                        return NSError(domain: "com.paychores.error", code: -100, userInfo: nil)
                     }
                     
                     var encoding: ParameterEncoding = .URLEncodedInURL
@@ -150,26 +209,17 @@ class HTTPClient : NSObject {
                         break
                     }
                     
-                    request(method, route.URLString, parameters: parameters, encoding: encoding, headers: tokenHeader)
-                        .responseJSON { (response) -> Void in
+                    Alamofire.request(method, route.URLString, parameters: parameters, encoding: encoding, headers: tokenHeader)
+                        .validate()
+                        .responseArray { (response: Response<[T], NSError>) in
+                            if let apiResponse = response.result.value {
+                                fulfill(apiResponse)
+                                return
+                            }
                             
                             if let error = response.result.error {
-                                reject(error) //network error
-                            }else {
-                                if let apiResponse = Mapper<CountReply<T>>().map(response.result.value) {
-                                    if apiResponse.success {
-                                        fulfill(apiResponse)
-                                    }else{
-                                        if let _ = apiResponse.error {
-                                            reject(APIError.unAuthorizedError("UNauthorized"))
-                                        }else{
-                                            reject(APIError.unAuthorizedError("UNauthorized"))
-                                        }
-                                    }
-                                }else{
-                                    let err = NSError(domain: "com.authorization.error", code: -101, userInfo: nil)
-                                    reject(err)
-                                }
+                                reject(error)
+                                return
                             }
                     }
             }
@@ -192,7 +242,7 @@ class HTTPClient : NSObject {
                     }
                     
                     func parsingError(erroString : String) -> NSError {
-                        return NSError(domain: "com.authorization.error", code: -100, userInfo: nil)
+                        return NSError(domain: "com.wallbrand.error", code: -100, userInfo: nil)
                     }
                     
                     var encoding: ParameterEncoding = .URLEncodedInURL
@@ -217,6 +267,83 @@ class HTTPClient : NSObject {
                                 reject(APIError.unAuthorizedError("Unauthorized"))
                             }
                     }
+            }
+        }
+    }
+    
+    
+    
+    
+    private func httpOperationUnauthorized<T: Mappable>(method : Alamofire.Method, route : RouterType, let parameters : [String : AnyObject]? = nil) -> Promise<T?> {
+        
+        
+        return Promise<T?> { (fulfill, reject) -> Void in
+            
+            func parsingError(erroString : String) -> NSError {
+                return NSError(domain: "com.paychores.com", code: -100, userInfo: nil)
+            }
+            
+            var encoding: ParameterEncoding = .URLEncodedInURL
+            
+            switch method {
+            case .POST:
+                encoding = ParameterEncoding.URL
+            case .GET:
+                encoding = ParameterEncoding.URLEncodedInURL
+            case .DELETE:
+                encoding = ParameterEncoding.URL
+            default:
+                break
+            }
+            
+            request(method, route.URLString, parameters: parameters, encoding: encoding, headers: nil)
+                .responseJSON { (response) -> Void in
+                    
+                    if let error = response.result.error {
+                        reject(error) //network error
+                    }else {
+                        if let apiResponse = Mapper<T>().map(response.result.value) {
+                            fulfill(apiResponse)
+                        }else{
+                            let err = NSError(domain: "com.paychores.error", code: -101, userInfo: nil)
+                            reject(err)
+                        }
+                    }
+                    
+            }
+        }
+    }
+    
+    
+    func uploadFile(withData data: NSData, route : RouterType, let parameters : [String : AnyObject]? = nil) -> Promise<File?> {
+        return Promise<File?> {
+            fulfill, reject in
+            AuthorizationService.sharedInstance.getValidToken()
+                .then {
+                _ -> Void in
+                
+                guard let tokenHeader = AuthorizationService.token_header else {
+                    reject(APIError.unAuthorizedError("Unauthorized"))
+                    return
+                }
+                
+                Alamofire.upload(.POST, route.URLString, headers: tokenHeader, multipartFormData: {
+                    multipartFormData in
+                    multipartFormData.appendBodyPart(data: data, name: "file[file]",
+                        fileName: "image.png", mimeType: "image/png")
+                    }, encodingCompletion: {
+                        encodingCompletionResult in
+                        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+                        switch encodingCompletionResult {
+                        case .Success(request: let upload, streamingFromDisk: _, streamFileURL: _):
+                            upload
+                                .responseObject { response in
+                                    fulfill(response.result.value)
+                            }
+                        case .Failure(let error):
+                            reject(error)
+                        }
+                })
             }
         }
     }
